@@ -3,10 +3,12 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import InterviewCard from "@/components/InterviewCard";
+import { getCurrentUser } from "@/lib/actions/auth.action";
+import { getInterviewsByUserId, getLatestInterviews } from "@/lib/actions/general.action";
 
 
 async function Home() {
-  /*const user = await getCurrentUser();
+  const user = await getCurrentUser();
 
   const [userInterviews, allInterview] = await Promise.all([
     getInterviewsByUserId(user?.id!),
@@ -15,7 +17,7 @@ async function Home() {
 
   const hasPastInterviews = userInterviews?.length! > 0;
   const hasUpcomingInterviews = allInterview?.length! > 0;
-  */
+  
   return (
     <>
       <section className="card-cta">
@@ -42,41 +44,46 @@ async function Home() {
       <section className="flex flex-col gap-6 mt-8">
         <h2>Your Interviews</h2>
 
-        
+        <div className="interviews-section">
+          {hasPastInterviews ? (
+            userInterviews?.map((interview) => (
+              <InterviewCard
+                key={interview.id}
+                userId={user?.id}
+                interviewId={interview.id}
+                role={interview.role}
+                type={interview.type}
+                techstack={interview.techstack}
+                createdAt={interview.createdAt}
+              />
+            ))
+          ) : (
+            <p>You haven&apos;t taken any interviews yet</p>
+          )}
+        </div>
       </section>
 
       <section className="flex flex-col gap-6 mt-8">
-  <h2>Take Interviews</h2>
-  
-  <div className="flex flex-wrap gap-6">
-    <InterviewCard 
-      interviewId="interview-123"
-      userId="user-456"
-      role="Frontend Developer"
-      type="Technical"
-      techstack={["React", "TypeScript", "CSS"]}
-      createdAt={new Date().toISOString()}
-    />
-    
-    <InterviewCard 
-      interviewId="interview-124"
-      userId="user-456"
-      role="Product Manager"
-      type="Behavioral"
-      techstack={["Agile", "Product Strategy"]}
-      createdAt={new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()} // 7 days ago
-    />
-    
-    <InterviewCard 
-      interviewId="interview-125"
-      userId="user-456"
-      role="Full Stack Engineer"
-      type="Question-by-Question"
-      techstack={["React", "Node.js", "MongoDB"]}
-      createdAt={new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString()} // 3 days ago
-    />
-  </div>
-</section>
+        <h2>Take Interviews</h2>
+
+        <div className="interviews-section">
+          {hasUpcomingInterviews ? (
+            allInterview?.map((interview) => (
+              <InterviewCard
+                key={interview.id}
+                userId={user?.id}
+                interviewId={interview.id}
+                role={interview.role}
+                type={interview.type}
+                techstack={interview.techstack}
+                createdAt={interview.createdAt}
+              />
+            ))
+          ) : (
+            <p>There are no interviews available</p>
+          )}
+        </div>
+      </section>
     </>
   );
 }
