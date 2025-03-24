@@ -4,13 +4,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAiBWiE63-pMVDlTZv8WGi5Hy3rS87dp4M",
-  authDomain: "interviewcoach-e4139.firebaseapp.com",
-  projectId: "interviewcoach-e4139",
-  storageBucket: "interviewcoach-e4139.firebasestorage.app",
-  messagingSenderId: "516811478349",
-  appId: "1:516811478349:web:96a74be0d7e9ea0acc9304",
-  measurementId: "G-E4MWGZ0T5P"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
