@@ -54,13 +54,7 @@ const InterviewCard = async ({
           </div>
 
           {/* Cover Image */}
-          <Image
-            src={getRandomInterviewCover()}
-            alt="cover-image"
-            width={90}
-            height={90}
-            className="rounded-full object-fit size-[90px]"
-          />
+          
 
           {/* Interview Role */}
           <h3 className="mt-5 capitalize">{role} Interview</h3>
